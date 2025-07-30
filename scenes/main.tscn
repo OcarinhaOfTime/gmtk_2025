@@ -1,10 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://dj1soqmfpqhaj"]
+[gd_scene load_steps=3 format=3 uid="uid://dj1soqmfpqhaj"]
 
 [ext_resource type="Texture2D" uid="uid://x2m03ax2605q" path="res://sprites/icon.svg" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://dl646q8uw2u0h" path="res://scripts/movement_test.gd" id="2_0wfyh"]
 
 [node name="main" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="Icon" type="Sprite2D" parent="."]
+[node name="player" type="Sprite2D" parent="."]
 texture = ExtResource("1_o5qli")
+script = ExtResource("2_0wfyh")
+speed = 300
