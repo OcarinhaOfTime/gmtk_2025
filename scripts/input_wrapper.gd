@@ -2,10 +2,12 @@ extends  Node
 
 signal on_accept()
 signal on_cancel()
+signal on_jump()
 
 var action_map = {
 	'accept': on_accept,
 	'cancel': on_cancel,
+	'jump': on_jump
 }
 
 
