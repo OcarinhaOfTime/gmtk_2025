@@ -1,8 +1,10 @@
 extends CharacterBody2D
 
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -300.0
+var speed = 150.0
+var jump_vel = -300.0
+
+
 @onready var anim = $AnimatedSprite2D
 var was_on_air = false
 var timer = 0
@@ -28,17 +30,20 @@ func on_animation_end():
 
 func jump():
 	if is_on_floor():
-		velocity.y = JUMP_VELOCITY
+		velocity.y = jump_vel
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
 	var direction = InputWrapper.get_move().x
+	if is_attacking and is_on_floor():
+		direction = 0
+	
 	if direction:
-		velocity.x = direction * SPEED
+		velocity.x = direction * speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, speed)
 
 	move_and_slide()
 	handle_animation(delta)

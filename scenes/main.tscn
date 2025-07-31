@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dj1soqmfpqhaj"]
+[gd_scene load_steps=10 format=3 uid="uid://dj1soqmfpqhaj"]
 
 [ext_resource type="PackedScene" uid="uid://cg4ryh153hehr" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="Shader" uid="uid://y2inmay3cvl7" path="res://shaders/color_sprite.gdshader" id="2_sugp2"]
 [ext_resource type="Texture2D" uid="uid://ct7loos3v5qc4" path="res://sprites/square.png" id="3_sugp2"]
 [ext_resource type="Shader" uid="uid://dqk4lmbktxqhq" path="res://shaders/ectoplasm.gdshader" id="4_jyhfs"]
+[ext_resource type="Script" uid="uid://d1b7vua6g1m4l" path="res://scenes/debug_controls.gd" id="5_tbgi4"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_tbgi4"]
 
@@ -25,6 +26,7 @@ shader_parameter/emission = 1.0
 zoom = Vector2(4, 4)
 
 [node name="player" parent="." instance=ExtResource("1_o5qli")]
+unique_name_in_owner = true
 position = Vector2(0, 14)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
@@ -51,3 +53,56 @@ shape = SubResource("RectangleShape2D_sugp2")
 material = SubResource("ShaderMaterial_tbgi4")
 scale = Vector2(0.645, 0.645)
 texture = ExtResource("3_sugp2")
+
+[node name="ui" type="CanvasLayer" parent="."]
+
+[node name="debug_controls" type="Control" parent="ui"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_tbgi4")
+
+[node name="panel" type="VBoxContainer" parent="ui/debug_controls"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="speed_setting" type="HBoxContainer" parent="ui/debug_controls/panel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ui/debug_controls/panel/speed_setting"]
+layout_mode = 2
+text = "speed"
+
+[node name="HSlider" type="HSlider" parent="ui/debug_controls/panel/speed_setting"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 300.0
+
+[node name="Label2" type="Label" parent="ui/debug_controls/panel/speed_setting"]
+layout_mode = 2
+text = "100"
+
+[node name="jump_setting" type="HBoxContainer" parent="ui/debug_controls/panel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ui/debug_controls/panel/jump_setting"]
+layout_mode = 2
+text = "jump"
+
+[node name="HSlider" type="HSlider" parent="ui/debug_controls/panel/jump_setting"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 400.0
+value = 300.0
+
+[node name="Label2" type="Label" parent="ui/debug_controls/panel/jump_setting"]
+layout_mode = 2
+text = "100"
