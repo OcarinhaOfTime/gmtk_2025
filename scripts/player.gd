@@ -7,18 +7,24 @@ const JUMP_VELOCITY = -300.0
 var was_on_air = false
 var timer = 0
 var is_attacking = false
+var idle_timer = 0
+var is_idle_animing = false
 
 func _ready() -> void:
 	InputWrapper.on_jump.connect(jump)
 	InputWrapper.on_attack.connect(attack)
-	print(anim)
+
+	anim.animation_finished.connect(on_animation_end)
 
 func attack():
 	if is_attacking:
 		return
 	is_attacking = true
 	anim.play('attack')
-	anim.animation_finished.connect(func (): is_attacking=false)
+
+func on_animation_end():
+	if is_attacking:
+		is_attacking=false
 
 func jump():
 	if is_on_floor():
@@ -38,7 +44,9 @@ func _physics_process(delta: float) -> void:
 	handle_animation(delta)
 
 func handle_animation(delta):
+	idle_timer += delta
 	if velocity.x != 0:
+		idle_timer = 0
 		anim.flip_h = velocity.x < 0
 
 	if is_attacking:
@@ -55,7 +63,12 @@ func handle_animation(delta):
 		if abs(velocity.x) > 0:
 			anim.play('run')
 		else:
-			anim.play('idle')		
+			if idle_timer < 3:
+				anim.play('idle')	
+			elif idle_timer < 5:
+				anim.play('idle_anim')
+			else:
+				idle_timer = 0
 
 	else:
 		timer = 0

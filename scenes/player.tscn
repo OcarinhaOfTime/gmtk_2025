@@ -30,11 +30,11 @@ region = Rect2(0, 48, 32, 48)
 atlas = ExtResource("2_g2els")
 region = Rect2(0, 0, 32, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8ls1"]
 atlas = ExtResource("2_g2els")
 region = Rect2(32, 0, 32, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qlg0r"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfm1y"]
 atlas = ExtResource("2_g2els")
 region = Rect2(0, 48, 32, 48)
 
@@ -89,19 +89,21 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qhqgy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dqkch")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qlg0r")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dqkch")
 }],
 "loop": true,
 "name": &"idle",
 "speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8ls1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qfm1y")
+}],
+"loop": true,
+"name": &"idle_anim",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 0.25,
@@ -156,5 +158,6 @@ shape = SubResource("CapsuleShape2D_0wfyh")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -24)
 sprite_frames = SubResource("SpriteFrames_tuyoq")
-animation = &"attack"
+animation = &"idle_anim"
 autoplay = "idle"
+frame_progress = 0.0897314
