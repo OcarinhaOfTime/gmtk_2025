@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 
-var speed = 150.0
-var jump_vel = -300.0
+var speed = 120.0
+var jump_vel = -320.0
 
 
 @onready var anim = $AnimatedSprite2D
@@ -11,14 +11,19 @@ var timer = 0
 var is_attacking = false
 var idle_timer = 0
 var is_idle_animing = false
+var sprint_mod =  1.9
+var speed_mod = 1.0
+var fps_mod = 1.0
 
 func _ready() -> void:
 	InputWrapper.on_jump.connect(jump)
 	InputWrapper.on_attack.connect(attack)
+	InputWrapper.on_shoot.connect(func (): print('pew'))
 
 	anim.animation_finished.connect(on_animation_end)
 
 func attack():
+	idle_timer = 0
 	if is_attacking:
 		return
 	is_attacking = true
@@ -32,7 +37,9 @@ func jump():
 	if is_on_floor():
 		velocity.y = jump_vel
 
-func _physics_process(delta: float) -> void:
+func _physics_process(delta: float) -> void:	
+	var b = InputWrapper.is_pressed('dash')
+	speed_mod = sprint_mod if b else 1.0
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
@@ -41,7 +48,7 @@ func _physics_process(delta: float) -> void:
 		direction = 0
 	
 	if direction:
-		velocity.x = direction * speed
+		velocity.x = direction * speed * speed_mod
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 
@@ -66,7 +73,8 @@ func handle_animation(delta):
 
 	elif is_on_floor():
 		if abs(velocity.x) > 0:
-			anim.play('run')
+			var k = 'run' if speed_mod <= 1 else 'sprint'
+			anim.play(k)
 		else:
 			if idle_timer < 3:
 				anim.play('idle')	
@@ -76,6 +84,7 @@ func handle_animation(delta):
 				idle_timer = 0
 
 	else:
+		idle_timer = 0
 		timer = 0
 		was_on_air = true
 		if velocity.y < 0:

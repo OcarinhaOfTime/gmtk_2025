@@ -16,18 +16,23 @@ var jump:
 		jump_label.text = str(v)
 		player.jump_vel = -v
 
+@onready var dash_slider = $panel/dash_setting/HSlider
+@onready var dash_label = $panel/dash_setting/Label2
+var dash:
+	set(v):
+		dash_slider.value = v
+		dash_label.text = str(v)
+		player.sprint_mod = v
+
 @onready var player = %player
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	speed = player.speed
 	jump = -player.jump_vel
+	dash = player.sprint_mod 
 
 	speed_slider.value_changed.connect(func (v): speed = v)
 	jump_slider.value_changed.connect(func (v): jump = v)
+	dash_slider.value_changed.connect(func (v): dash = v)
 	
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass

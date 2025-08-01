@@ -6,12 +6,6 @@
 [ext_resource type="Shader" uid="uid://dqk4lmbktxqhq" path="res://shaders/ectoplasm.gdshader" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://d1b7vua6g1m4l" path="res://scenes/debug_controls.gd" id="5_tbgi4"]
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_tbgi4"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tefeu"]
-shader = ExtResource("2_sugp2")
-shader_parameter/color = Color(0.153465, 0.339041, 0.196654, 1)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sugp2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tbgi4"]
@@ -19,6 +13,12 @@ shader = ExtResource("4_jyhfs")
 shader_parameter/color = Color(0.482112, 0.30469, 0.758809, 1)
 shader_parameter/disp = 0.5
 shader_parameter/emission = 1.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_tbgi4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tefeu"]
+shader = ExtResource("2_sugp2")
+shader_parameter/color = Color(0.153465, 0.339041, 0.196654, 1)
 
 [node name="main" type="Node2D"]
 
@@ -28,18 +28,6 @@ zoom = Vector2(4, 4)
 [node name="player" parent="." instance=ExtResource("1_o5qli")]
 unique_name_in_owner = true
 position = Vector2(0, 14)
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(1, 43)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-shape = SubResource("WorldBoundaryShape2D_tbgi4")
-
-[node name="flat_color" type="Sprite2D" parent="StaticBody2D"]
-material = SubResource("ShaderMaterial_tefeu")
-position = Vector2(11, 85)
-scale = Vector2(100, 5.25)
-texture = ExtResource("3_sugp2")
 
 [node name="Area2D" type="Area2D" parent="."]
 visible = false
@@ -106,3 +94,37 @@ value = 300.0
 [node name="Label2" type="Label" parent="ui/debug_controls/panel/jump_setting"]
 layout_mode = 2
 text = "100"
+
+[node name="dash_setting" type="HBoxContainer" parent="ui/debug_controls/panel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ui/debug_controls/panel/dash_setting"]
+layout_mode = 2
+text = "dash"
+
+[node name="HSlider" type="HSlider" parent="ui/debug_controls/panel/dash_setting"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 3.0
+step = 0.1
+value = 1.5
+
+[node name="Label2" type="Label" parent="ui/debug_controls/panel/dash_setting"]
+layout_mode = 2
+text = "1.2"
+
+[node name="world" type="Node2D" parent="."]
+
+[node name="floor" type="StaticBody2D" parent="world"]
+position = Vector2(1, 43)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world/floor"]
+shape = SubResource("WorldBoundaryShape2D_tbgi4")
+
+[node name="flat_color" type="Sprite2D" parent="world/floor"]
+material = SubResource("ShaderMaterial_tefeu")
+position = Vector2(11, 85)
+scale = Vector2(100, 5.25)
+texture = ExtResource("3_sugp2")
