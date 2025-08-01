@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpur4bhi58gyf"]
+
+[sub_resource type="Environment" id="Environment_mog22"]
+background_mode = 1
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_mog22")

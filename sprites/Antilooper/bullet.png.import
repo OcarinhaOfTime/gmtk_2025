@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ppwx8r4jgh6t"
-path="res://.godot/imported/kick 2.png-0ec808508a0270999eeaa0472368b2ea.ctex"
+uid="uid://curs682nump5h"
+path="res://.godot/imported/bullet.png-7b2c66fc159e92a5a58d3c8913bf464a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/Antilooper/kick 2.png"
-dest_files=["res://.godot/imported/kick 2.png-0ec808508a0270999eeaa0472368b2ea.ctex"]
+source_file="res://sprites/Antilooper/bullet.png"
+dest_files=["res://.godot/imported/bullet.png-7b2c66fc159e92a5a58d3c8913bf464a.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ppwx8r4jgh6t"
-path="res://.godot/imported/kick.png-dbb7494ca774c339970631f59767d67f.ctex"
+uid="uid://cex008p4svrq8"
+path="res://.godot/imported/DisplacementMap.png-e3bab4b41e57e71d9048c4469f796e58.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/Antilooper/kick.png"
-dest_files=["res://.godot/imported/kick.png-dbb7494ca774c339970631f59767d67f.ctex"]
+source_file="res://textures/DisplacementMap.png"
+dest_files=["res://.godot/imported/DisplacementMap.png-e3bab4b41e57e71d9048c4469f796e58.ctex"]
 
 [params]
 

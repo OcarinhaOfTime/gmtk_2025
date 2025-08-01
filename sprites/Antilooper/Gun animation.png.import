@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ppwx8r4jgh6t"
-path="res://.godot/imported/kick.png-dbb7494ca774c339970631f59767d67f.ctex"
+uid="uid://bfl01rja86bjn"
+path="res://.godot/imported/Gun animation.png-315fafd7fef5418f984caf2172e719f2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/Antilooper/kick.png"
-dest_files=["res://.godot/imported/kick.png-dbb7494ca774c339970631f59767d67f.ctex"]
+source_file="res://sprites/Antilooper/Gun animation.png"
+dest_files=["res://.godot/imported/Gun animation.png-315fafd7fef5418f984caf2172e719f2.ctex"]
 
 [params]
 

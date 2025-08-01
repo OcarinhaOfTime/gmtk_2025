@@ -1,0 +1,77 @@
+[gd_scene load_steps=10 format=3 uid="uid://c0hjqte6q6v4r"]
+
+[ext_resource type="Script" uid="uid://cp4wpv7dy7aco" path="res://scripts/animated_shot.gd" id="1_s6u2w"]
+[ext_resource type="Texture2D" uid="uid://curs682nump5h" path="res://sprites/Antilooper/bullet.png" id="1_vncj2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pf23h"]
+atlas = ExtResource("1_vncj2")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dt7fs"]
+atlas = ExtResource("1_vncj2")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ke2ow"]
+atlas = ExtResource("1_vncj2")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ujl30"]
+atlas = ExtResource("1_vncj2")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_31cv2"]
+atlas = ExtResource("1_vncj2")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wqfne"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pf23h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dt7fs")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"explode",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ke2ow")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ujl30")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_31cv2")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vncj2"]
+radius = 3.0
+
+[node name="animated_shot" type="Area2D"]
+script = ExtResource("1_s6u2w")
+
+[node name="animated_shot" type="AnimatedSprite2D" parent="."]
+z_index = -1
+sprite_frames = SubResource("SpriteFrames_wqfne")
+animation = &"shoot"
+autoplay = "default"
+frame = 2
+frame_progress = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_vncj2")
