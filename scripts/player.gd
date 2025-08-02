@@ -18,10 +18,11 @@ var speed_mod = 1.0
 var direction = 0
 
 var ectoplasm = null
-
+@onready var kick_hitbox = $kick_hitbox
 @onready var animated_shot_scene = preload('res://scenes/animated_shot.tscn')
 
 func _ready() -> void:
+	kick_hitbox.visible = false
 	InputWrapper.on_jump.connect(jump)
 	InputWrapper.on_attack.connect(attack)
 	InputWrapper.on_shoot.connect(shoot)
@@ -31,6 +32,7 @@ func _ready() -> void:
 
 	anim.animation_finished.connect(on_animation_end)
 	$HealthComponent.on_take_damage.connect(take_dam)
+	kick_hitbox.area_entered.connect(on_kick_hit)
 
 func take_dam():
 	idle_timer = 0
@@ -43,6 +45,15 @@ func attack():
 		return
 	is_attacking = true
 	anim.play('attack' if is_on_floor() else 'jump_attack')
+	await wait_for_n_process_frames(8)
+	kick_hitbox.monitoring = true
+	kick_hitbox.visible = true
+
+func on_kick_hit(b):
+	print(b.name)
+	if b.is_in_group('enemy') and b.has_node('HealthComponent'):
+		b.get_node('HealthComponent').take_damage(3)
+
 
 func shoot():
 	idle_timer = 0
@@ -80,6 +91,8 @@ func on_animation_end():
 		await wait_for_floor()
 		is_attacking=false
 		anim.offset.x = 0
+		kick_hitbox.monitoring = false
+		kick_hitbox.visible = false
 
 	if is_shooting:
 		is_shooting=false
@@ -136,6 +149,7 @@ func handle_animation(delta):
 	if velocity.x != 0:
 		idle_timer = 0
 		anim.flip_h = velocity.x < 0
+		kick_hitbox.position.x = -abs(kick_hitbox.position.x) if velocity.x < 0 else abs(kick_hitbox.position.x)
 
 	if is_attacking or is_shooting or taking_damage:
 		return

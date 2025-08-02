@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cyh2ffqolxs8r"]
+[gd_scene load_steps=8 format=3 uid="uid://cyh2ffqolxs8r"]
 
 [ext_resource type="Script" uid="uid://bv71a0nmdcv4q" path="res://scripts/enemy.gd" id="1_md0e3"]
 [ext_resource type="Texture2D" uid="uid://cux384bjf8jn1" path="res://sprites/npcs/bat.png" id="2_4ra3w"]
+[ext_resource type="Script" uid="uid://cllpdcivereov" path="res://scripts/health_component.gd" id="3_4ra3w"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j7wed"]
 atlas = ExtResource("2_4ra3w")
@@ -28,7 +29,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_5cnjq"]
 radius = 7.0
 
-[node name="enemy" type="Area2D"]
+[node name="enemy" type="Area2D" groups=["enemy"]]
 script = ExtResource("1_md0e3")
 speed = 50.0
 
@@ -39,3 +40,7 @@ frame_progress = 0.764051
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_5cnjq")
+
+[node name="HealthComponent" type="Node2D" parent="."]
+script = ExtResource("3_4ra3w")
+metadata/_custom_type_script = "uid://cllpdcivereov"

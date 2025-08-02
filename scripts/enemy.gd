@@ -3,6 +3,7 @@ extends Area2D
 
 func _ready():
 	body_entered.connect(on_hit)
+	$HealthComponent.on_death.connect(queue_free)
 	
 func on_hit(b):
 	if b.has_node('HealthComponent'):

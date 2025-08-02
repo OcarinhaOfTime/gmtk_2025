@@ -22,6 +22,12 @@ buses/default_bus_layout="res://audio/main_bus_layout.tres"
 [autoload]
 
 InputWrapper="*res://scripts/input_wrapper.gd"
+GameManager="*res://scripts/game_manager.gd"
+
+[global_group]
+
+player=""
+enemy=""
 
 [input]
 

@@ -6,6 +6,19 @@ var dir = 1
 var exploding = false
 @onready var animated_shot = $animated_shot
 
+func _ready() -> void:
+	body_entered.connect(hit)
+	area_entered.connect(hit)
+
+func hit(b):
+	if b.is_in_group('player'):
+		return
+	if b.has_node('HealthComponent'):
+		b.get_node('HealthComponent').take_damage(1)
+
+	speed = 0
+	explode()
+
 func shoot(node, d):
 	dir = d
 	var gps = node.global_position + Vector2(dir * 24, -10)

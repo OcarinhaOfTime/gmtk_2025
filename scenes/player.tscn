@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://cg4ryh153hehr"]
+[gd_scene load_steps=35 format=3 uid="uid://cg4ryh153hehr"]
 
 [ext_resource type="Script" uid="uid://b2mmxf5bsarm6" path="res://scripts/player.gd" id="1_dqkch"]
 [ext_resource type="Texture2D" uid="uid://ppwx8r4jgh6t" path="res://sprites/Antilooper/kick.png" id="2_qlg0r"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://cllpdcivereov" path="res://scripts/health_component.gd" id="10_y4r1p"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0wfyh"]
+radius = 6.0
 height = 36.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jej6c"]
@@ -271,18 +272,30 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="player" type="CharacterBody2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_y4r1p"]
+radius = 14.0357
+
+[node name="player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_dqkch")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 0)
 shape = SubResource("CapsuleShape2D_0wfyh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -6)
 sprite_frames = SubResource("SpriteFrames_tuyoq")
-animation = &"hurt"
+animation = &"jump_attack"
 autoplay = "idle"
 
 [node name="HealthComponent" type="Node2D" parent="."]
 script = ExtResource("10_y4r1p")
 metadata/_custom_type_script = "uid://cllpdcivereov"
+
+[node name="kick_hitbox" type="Area2D" parent="." groups=["player"]]
+position = Vector2(18, 0)
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="kick_hitbox" groups=["player"]]
+position = Vector2(-3, 0)
+shape = SubResource("CircleShape2D_y4r1p")
