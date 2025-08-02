@@ -1,6 +1,6 @@
 extends Area2D
 
-var speed = 200
+var speed = 350
 var timer = 0
 var dir = 1
 var exploding = false
@@ -19,7 +19,7 @@ func explode():
 
 func _physics_process(delta: float) -> void:
 	timer += delta
-	if timer > .5 and not exploding:
+	if timer > .35 and not exploding:
 		exploding = true
 		explode()
 

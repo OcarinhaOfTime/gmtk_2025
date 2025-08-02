@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://cyh2ffqolxs8r"]
+
+[ext_resource type="Script" uid="uid://bv71a0nmdcv4q" path="res://scripts/enemy.gd" id="1_md0e3"]
+[ext_resource type="Texture2D" uid="uid://cux384bjf8jn1" path="res://sprites/npcs/bat.png" id="2_4ra3w"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j7wed"]
+atlas = ExtResource("2_4ra3w")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_radsc"]
+atlas = ExtResource("2_4ra3w")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_civ24"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j7wed")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_radsc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5cnjq"]
+radius = 7.0
+
+[node name="enemy" type="Area2D"]
+script = ExtResource("1_md0e3")
+speed = 50.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_civ24")
+autoplay = "default"
+frame_progress = 0.764051
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_5cnjq")

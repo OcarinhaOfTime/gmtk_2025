@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://cbaq4gwc2uqw2"]
+[gd_scene load_steps=7 format=3 uid="uid://cbaq4gwc2uqw2"]
 
+[ext_resource type="Script" uid="uid://ball4xiydi8r6" path="res://scripts/ectoplasm.gd" id="1_leemg"]
 [ext_resource type="Shader" uid="uid://dqk4lmbktxqhq" path="res://shaders/ectoplasm.gdshader" id="1_v7ddx"]
 [ext_resource type="Texture2D" uid="uid://cex008p4svrq8" path="res://textures/DisplacementMap.png" id="2_leemg"]
 [ext_resource type="Texture2D" uid="uid://ct7loos3v5qc4" path="res://sprites/square.png" id="3_61ls1"]
@@ -15,12 +16,13 @@ shader_parameter/displacement = ExtResource("2_leemg")
 
 [node name="ectoplasm" type="Area2D"]
 scale = Vector2(5, 5)
-monitoring = false
-monitorable = false
 gravity_point_center = Vector2(0, -1)
 gravity_direction = Vector2(0, -1)
 gravity = 557.155
 linear_damp_space_override = 3
+script = ExtResource("1_leemg")
+pull_speed = 500
+drag = 3.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_sugp2")
