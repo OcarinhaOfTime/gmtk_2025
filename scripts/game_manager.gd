@@ -12,12 +12,17 @@ extends Node
 var current_level = 0
 var current_stage = null
 
+@onready var playlist = [
+	preload("res://audio/music/Spooky Town.mp3"),
+	preload("res://audio/music/Haunted Mansion.mp3"),
+	preload("res://audio/music/Boss Theme.mp3")
+]
+
 func _ready() -> void:
 	print('am I here again???')
 	Engine.max_fps = 60
 	add_child(music)
-	music.stream = preload("res://audio/music/Spooky Town.mp3")
-	music.bus = "Music"
+	
 
 	player.on_death.connect(game_over)
 	player.entered_new_level.connect(next_level)
@@ -25,6 +30,10 @@ func _ready() -> void:
 	await get_tree().create_timer(0.1).timeout
 
 	current_level = clamp(0, 2, level_manager.first_level -1)
+
+	music.stream = playlist[current_level]
+	music.bus = "Music"
+	music.play()
 
 	current_stage = level_manager.load_level(current_level)
 	cam.setup_lims(current_stage)
@@ -48,6 +57,9 @@ func next_level():
 	current_level += 1
 	print('next level ' + str(current_level))
 	call_deferred('reload_game')
+
+	music.stream = playlist[current_level]
+	music.play()
 
 
 func reload_game():
