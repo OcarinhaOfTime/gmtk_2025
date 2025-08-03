@@ -1,7 +1,7 @@
 extends Area2D
 @export var speed = 200.0
 
-@onready var player = %player
+@onready var player = get_tree().get_current_scene().get_node("%player")
 var begun = false
 @onready var audio_player = $audio_player
 @onready var rl = $raycast_l

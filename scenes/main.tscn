@@ -37,7 +37,7 @@ script = ExtResource("1_tipki")
 
 [node name="player" parent="." instance=ExtResource("1_o5qli")]
 unique_name_in_owner = true
-position = Vector2(-128, 26)
+position = Vector2(-128, 34)
 
 [node name="ui" type="CanvasLayer" parent="."]
 
