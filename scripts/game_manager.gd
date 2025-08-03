@@ -22,31 +22,41 @@ func _ready() -> void:
 	print('am I here again???')
 	Engine.max_fps = 60
 	add_child(music)
+	music.bus = "Music"
+
+	music.stream = playlist[current_level]
 	
+	music.play()
 
 	player.on_death.connect(game_over)
 	player.entered_new_level.connect(next_level)
 
 	await get_tree().create_timer(0.1).timeout
-
 	current_level = clamp(0, 2, level_manager.first_level -1)
 
-	music.stream = playlist[current_level]
-	music.bus = "Music"
-	music.play()
-
+	#load_level()
 	current_stage = level_manager.load_level(current_level)
 	cam.setup_lims(current_stage)
+	
 
-	var s = fade_panel.get_theme_stylebox('Panel')
-	var new_style = s.duplicate() 
-	new_style.bg_color = Color.RED
-	fade_panel.add_theme_stylebox_override("Panel", new_style)
+	# var s = fade_panel.get_theme_stylebox('Panel')
+	# var new_style = s.duplicate() 
+	# new_style.bg_color = Color.RED
+	# fade_panel.add_theme_stylebox_override("Panel", new_style)
 
 func game_over():
 	print('Game manager: u done boy')
 	await TweenHandler.wait_secs(1)
 	game_over_panel.visible = true
+
+func load_level():
+	current_stage = level_manager.load_level(current_level)
+	cam.setup_lims(current_stage)
+
+	if current_stage.has_node('spawn'):
+		var p = current_stage.get_node('spawn').position
+		player.position.x = p.x
+		cam.position.x = p.x
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -79,5 +89,6 @@ func refresh_refs():
 	level_manager = cs.get_node("%level_manager")
 
 	current_stage = level_manager.load_level(current_level)
+	cam.setup_lims(current_stage)
 
 	player.on_death.connect(game_over)
