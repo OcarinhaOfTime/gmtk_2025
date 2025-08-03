@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://5anhhq6ovv8d"
+path="res://.godot/imported/Spooky Town.mp3-17d5e4ce33e7feed31b05c8dc9b2b2bc.mp3str"
+
+[deps]
+
+source_file="res://audio/music/Spooky Town.mp3"
+dest_files=["res://.godot/imported/Spooky Town.mp3-17d5e4ce33e7feed31b05c8dc9b2b2bc.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

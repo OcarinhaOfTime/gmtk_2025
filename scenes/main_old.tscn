@@ -1,0 +1,145 @@
+[gd_scene load_steps=8 format=4 uid="uid://dj1soqmfpqhaj"]
+
+[ext_resource type="Script" uid="uid://bh73tehio0cnq" path="res://scripts/camera_2d.gd" id="1_rqyo2"]
+[ext_resource type="PackedScene" uid="uid://cg4ryh153hehr" path="res://scenes/player.tscn" id="2_6r5i0"]
+[ext_resource type="Script" uid="uid://d1b7vua6g1m4l" path="res://scripts/debug_controls.gd" id="3_l4nag"]
+[ext_resource type="TileSet" uid="uid://2evmh2xssyja" path="res://resources/tileset1.tres" id="4_6ipvj"]
+[ext_resource type="PackedScene" uid="uid://cbaq4gwc2uqw2" path="res://scenes/ectoplasm.tscn" id="5_vt6j0"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_tbgi4"]
+
+[sub_resource type="Environment" id="Environment_tbgi4"]
+background_mode = 1
+glow_enabled = true
+glow_intensity = 8.0
+glow_strength = 2.0
+glow_bloom = 1.0
+glow_blend_mode = 1
+glow_hdr_threshold = 0.67
+glow_hdr_scale = 3.32
+glow_hdr_luminance_cap = 77.25
+
+[node name="main" type="Node2D"]
+metadata/_edit_horizontal_guides_ = [-64.0]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-47, -1)
+zoom = Vector2(2, 2)
+limit_left = -150
+limit_right = 400
+position_smoothing_enabled = true
+script = ExtResource("1_rqyo2")
+
+[node name="player" parent="." instance=ExtResource("2_6r5i0")]
+unique_name_in_owner = true
+position = Vector2(-128, 26)
+
+[node name="ui" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="debug_controls" type="Control" parent="ui"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_l4nag")
+
+[node name="panel" type="VBoxContainer" parent="ui/debug_controls"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="speed_setting" type="HBoxContainer" parent="ui/debug_controls/panel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ui/debug_controls/panel/speed_setting"]
+layout_mode = 2
+text = "speed"
+
+[node name="HSlider" type="HSlider" parent="ui/debug_controls/panel/speed_setting"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 300.0
+
+[node name="Label2" type="Label" parent="ui/debug_controls/panel/speed_setting"]
+layout_mode = 2
+text = "100"
+
+[node name="jump_setting" type="HBoxContainer" parent="ui/debug_controls/panel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ui/debug_controls/panel/jump_setting"]
+layout_mode = 2
+text = "jump"
+
+[node name="HSlider" type="HSlider" parent="ui/debug_controls/panel/jump_setting"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 400.0
+value = 300.0
+
+[node name="Label2" type="Label" parent="ui/debug_controls/panel/jump_setting"]
+layout_mode = 2
+text = "100"
+
+[node name="dash_setting" type="HBoxContainer" parent="ui/debug_controls/panel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ui/debug_controls/panel/dash_setting"]
+layout_mode = 2
+text = "dash"
+
+[node name="HSlider" type="HSlider" parent="ui/debug_controls/panel/dash_setting"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 3.0
+step = 0.1
+value = 1.5
+
+[node name="Label2" type="Label" parent="ui/debug_controls/panel/dash_setting"]
+layout_mode = 2
+text = "1.2"
+
+[node name="world" type="Node2D" parent="."]
+
+[node name="floor" type="StaticBody2D" parent="world"]
+position = Vector2(-193, 0)
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world/floor"]
+shape = SubResource("WorldBoundaryShape2D_tbgi4")
+
+[node name="floor2" type="StaticBody2D" parent="world"]
+position = Vector2(396, 0)
+rotation = -1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world/floor2"]
+shape = SubResource("WorldBoundaryShape2D_tbgi4")
+
+[node name="background" type="TileMapLayer" parent="world"]
+z_index = -5
+tile_map_data = PackedByteArray("AAD1//v/AQABAAMAAAD1//z/AQABAAQAAAD1//3/AQABAAUAAAD1//7/AQABAAYAAAD1////AQABAAcAAAD1/wAAAQABAAgAAAD1/wEAAQABAAkAAAD1/wIAAQABAAoAAAD2//v/AQABAAMAAAD2//z/AQABAAQAAAD2//3/AQABAAUAAAD2//7/AQABAAYAAAD2////AQABAAcAAAD2/wAAAQABAAgAAAD2/wEAAQABAAkAAAD2/wIAAQABAAoAAAD3//v/AQABAAMAAAD3//z/AQABAAQAAAD3//3/AQABAAUAAAD3//7/AQABAAYAAAD3////AQABAAcAAAD3/wAAAQABAAgAAAD3/wEAAQABAAkAAAD3/wIAAQABAAoAAAD4//v/AQABAAMAAAD4//z/AQABAAQAAAD4//3/AQABAAUAAAD4//7/AQABAAYAAAD4////AQABAAcAAAD4/wAAAQABAAgAAAD4/wEAAQABAAkAAAD4/wIAAQABAAoAAAD5//v/AQABAAMAAAD5//z/AQABAAQAAAD5//3/AQABAAUAAAD5//7/AQABAAYAAAD5////AQABAAcAAAD5/wAAAQABAAgAAAD5/wEAAQABAAkAAAD5/wIAAQABAAoAAAA=")
+tile_set = ExtResource("4_6ipvj")
+
+[node name="midground" type="TileMapLayer" parent="world"]
+z_index = -3
+tile_set = ExtResource("4_6ipvj")
+
+[node name="foreground" type="TileMapLayer" parent="world"]
+z_index = -1
+tile_map_data = PackedByteArray("AAD1/wMAAQADAAwAAAD2/wMAAQADAAwAAAD3/wMAAQADAAwAAAD4/wMAAQADAAwAAAD5/wMAAQADAAwAAAD6/wMAAQADAAwAAAD7/wMAAQADAAwAAAD8/wMAAQADAAwAAAD9/wMAAQADAAwAAAD+/wMAAQADAAwAAAD//wMAAQADAAwAAAAAAAMAAQADAAwAAAABAAMAAQADAAwAAAACAAMAAQADAAwAAAADAAMAAQADAAwAAAAEAAMAAQADAAwAAAAFAAMAAQADAAwAAAAGAAMAAQADAAwAAAAHAAMAAQADAAwAAAAIAAMAAQADAAwAAAD2/wQAAQACAA0AAAD3/wQAAQACAA0AAAD4/wQAAQACAA0AAAD5/wQAAQACAA0AAAD6/wQAAQACAA0AAAD7/wQAAQACAA0AAAD8/wQAAQACAA0AAAD9/wQAAQACAA0AAAD+/wQAAQACAA0AAAD//wQAAQACAA0AAAAAAAQAAQACAA0AAAABAAQAAQACAA0AAAACAAQAAQACAA0AAAADAAQAAQACAA0AAAAEAAQAAQACAA0AAAAFAAQAAQACAA0AAAAGAAQAAQACAA0AAAAHAAQAAQACAA0AAAD2/wUAAQADAA8AAAD3/wUAAQADAA8AAAD4/wUAAQADAA8AAAD5/wUAAQADAA8AAAD6/wUAAQADAA8AAAD7/wUAAQADAA8AAAD8/wUAAQADAA8AAAD9/wUAAQADAA8AAAD+/wUAAQADAA8AAAD//wUAAQADAA8AAAAAAAUAAQADAA8AAAABAAUAAQADAA8AAAACAAUAAQADAA8AAAADAAUAAQADAA8AAAAEAAUAAQADAA8AAAAFAAUAAQADAA8AAAAGAAUAAQADAA8AAAAHAAUAAQADAA8AAAAGAAYAAQADAA8AAAAHAAYAAQADAA8AAAAFAAYAAQADAA8AAAAEAAYAAQADAA8AAAADAAYAAQADAA8AAAACAAYAAQADAA8AAAABAAYAAQADAA8AAAAAAAYAAQADAA8AAAD//wYAAQADAA8AAAD+/wYAAQADAA8AAAD9/wYAAQADAA8AAAD8/wYAAQADAA8AAAD7/wYAAQADAA8AAAD6/wYAAQADAA8AAAD5/wYAAQADAA8AAAD4/wYAAQADAA8AAAD3/wYAAQADAA8AAAD2/wYAAQADAA8AAAAIAAQAAQAHAA4AAAD1/wQAAQAHAA4AAAD1/wUAAQAGAA8AAAD1/wYAAQAGAA8AAAAIAAUAAQAGAA8AAAAIAAYAAQAGAA8AAAAJAAMAAQAIAA4AAAAJAAQAAQAIAA8AAAAKAAMAAQAIAA4AAAAKAAQAAQAIAA8AAAALAAMAAQAJAA4AAAALAAQAAQAJAA8AAAAMAAMAAQAIAA4AAAAMAAQAAQAIAA8AAAANAAMAAQAJAA4AAAANAAQAAQAJAA8AAAAOAAMAAQAEAAwAAAAPAAMAAQAEAAwAAAAQAAMAAQAEAAwAAAARAAMAAQAEAAwAAAASAAMAAQAEAAwAAAATAAMAAQAEAAwAAAAUAAMAAQAEAAwAAAAVAAMAAQAEAAwAAAAOAAQAAQACAA0AAAAPAAQAAQACAA0AAAAQAAQAAQACAA0AAAARAAQAAQACAA0AAAASAAQAAQACAA0AAAATAAQAAQACAA0AAAAUAAQAAQACAA0AAAAVAAQAAQACAA0AAAA=")
+tile_set = ExtResource("4_6ipvj")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_tbgi4")
+
+[node name="ectoplasm" parent="." instance=ExtResource("5_vt6j0")]
+position = Vector2(-125, -27)

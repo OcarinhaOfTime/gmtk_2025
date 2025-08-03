@@ -5,6 +5,7 @@ extends Control
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player_health.on_take_damage.connect(update_health)
+	player_health.on_death.connect(update_health)
 
 
 func update_health():

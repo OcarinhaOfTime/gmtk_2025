@@ -1,8 +1,17 @@
-[gd_scene load_steps=8 format=3 uid="uid://cyh2ffqolxs8r"]
+[gd_scene load_steps=15 format=3 uid="uid://cyh2ffqolxs8r"]
 
 [ext_resource type="Script" uid="uid://bv71a0nmdcv4q" path="res://scripts/enemy.gd" id="1_md0e3"]
 [ext_resource type="Texture2D" uid="uid://cux384bjf8jn1" path="res://sprites/npcs/bat.png" id="2_4ra3w"]
+[ext_resource type="Shader" uid="uid://y2inmay3cvl7" path="res://shaders/color_sprite.gdshader" id="2_c4w8v"]
 [ext_resource type="Script" uid="uid://cllpdcivereov" path="res://scripts/health_component.gd" id="3_4ra3w"]
+[ext_resource type="Script" uid="uid://q4mbg6qjql" path="res://scripts/animatable_sprite.gd" id="3_5uy6h"]
+[ext_resource type="AudioStream" uid="uid://cid35yflsfp2a" path="res://audio/sfx/Enemy Hurt.wav" id="6_md484"]
+[ext_resource type="AudioStream" uid="uid://b1ffuifdb2isj" path="res://audio/sfx/Enemy Dead.wav" id="7_ipns3"]
+[ext_resource type="Script" uid="uid://dat0t2tqvm8b6" path="res://scripts/audio_player.gd" id="8_8qclf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xwavj"]
+shader = ExtResource("2_c4w8v")
+shader_parameter/color = Color(1, 1, 1, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j7wed"]
 atlas = ExtResource("2_4ra3w")
@@ -29,14 +38,22 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_5cnjq"]
 radius = 7.0
 
+[sub_resource type="AudioStreamPlaylist" id="AudioStreamPlaylist_w8i8w"]
+stream_count = 2
+stream_0 = ExtResource("6_md484")
+stream_1 = ExtResource("7_ipns3")
+
 [node name="enemy" type="Area2D" groups=["enemy"]]
 script = ExtResource("1_md0e3")
 speed = 50.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_xwavj")
+position = Vector2(1, 0)
 sprite_frames = SubResource("SpriteFrames_civ24")
 autoplay = "default"
 frame_progress = 0.764051
+script = ExtResource("3_5uy6h")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_5cnjq")
@@ -44,3 +61,8 @@ shape = SubResource("CircleShape2D_5cnjq")
 [node name="HealthComponent" type="Node2D" parent="."]
 script = ExtResource("3_4ra3w")
 metadata/_custom_type_script = "uid://cllpdcivereov"
+
+[node name="audio_player" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamPlaylist_w8i8w")
+script = ExtResource("8_8qclf")
+metadata/_custom_type_script = "uid://dat0t2tqvm8b6"

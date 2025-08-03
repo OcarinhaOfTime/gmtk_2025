@@ -11,8 +11,11 @@ config_version=5
 [application]
 
 config/name="gmtk_2025"
-run/main_scene="uid://cygpx11lfrcbv"
+run/main_scene="uid://dj1soqmfpqhaj"
 config/features=PackedStringArray("4.4", "Forward Plus")
+boot_splash/show_image=false
+boot_splash/fullsize=false
+boot_splash/use_filter=false
 config/icon="res://sprites/icon.svg"
 
 [audio]
@@ -23,6 +26,7 @@ buses/default_bus_layout="res://audio/main_bus_layout.tres"
 
 InputWrapper="*res://scripts/input_wrapper.gd"
 GameManager="*res://scripts/game_manager.gd"
+TweenHandler="*res://scripts/tween_handler.gd"
 
 [global_group]
 

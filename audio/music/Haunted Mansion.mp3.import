@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c7fxmgake7v12"
+path="res://.godot/imported/Haunted Mansion.mp3-6256551f61afac2a956a8b6d6520a32d.mp3str"
+
+[deps]
+
+source_file="res://audio/music/Haunted Mansion.mp3"
+dest_files=["res://.godot/imported/Haunted Mansion.mp3-6256551f61afac2a956a8b6d6520a32d.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

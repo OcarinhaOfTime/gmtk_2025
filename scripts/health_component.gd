@@ -7,17 +7,21 @@ signal on_death()
 
 var health: int = 3
 @export var max_health: int = 3
+var has_iframes = false
 
 func _ready():
 	health = max_health
 
 func take_damage(d):
-	print('damage on ' + get_parent().name)
+	if has_iframes:
+		return
+		
 	if health <= 0:
 		return
 		
 	health = max(0, health - d)
-	on_take_damage.emit()
+	if health > 0:
+		on_take_damage.emit()
 	
 	if health <= 0:
 		on_death.emit()

@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-
+signal on_death()
 var speed = 120.0
 var jump_vel = -320.0
 
@@ -10,6 +10,7 @@ var was_on_air = false
 var timer = 0
 var is_attacking = false
 var is_shooting = false
+var lose_control = false
 var taking_damage = false
 var idle_timer = 0
 var is_idle_animing = false
@@ -19,7 +20,11 @@ var direction = 0
 
 var ectoplasm = null
 @onready var kick_hitbox = $kick_hitbox
+@onready var health_comp = $HealthComponent
 @onready var animated_shot_scene = preload('res://scenes/animated_shot.tscn')
+@onready var audio_player = $audio_player
+
+var momentum_force = Vector2(0, 0)
 
 func _ready() -> void:
 	kick_hitbox.visible = false
@@ -31,23 +36,51 @@ func _ready() -> void:
 	InputWrapper.on_dash_released.connect(func (): speed_mod=1.0)
 
 	anim.animation_finished.connect(on_animation_end)
-	$HealthComponent.on_take_damage.connect(take_dam)
+	health_comp.on_take_damage.connect(take_dam)
+	health_comp.on_death.connect(die)
 	kick_hitbox.area_entered.connect(on_kick_hit)
 
+func play_audio(idx):
+	audio_player.play_once(idx)
+
+func die():
+	lose_control = true
+	anim.play('dead')
+	play_audio(3)
+	on_death.emit()
+
 func take_dam():
+	lose_control = true
 	idle_timer = 0
 	taking_damage = true
+	#tween
 	anim.play('hurt')
+	play_audio(2)
+	health_comp.has_iframes = true
+	var w = anim.blink_ghost(2)
+	await TweenHandler.wait_secs(.5)
+	lose_control = false
+	await w
+	health_comp.has_iframes = false
 	
 func attack():
 	idle_timer = 0
-	if is_attacking or is_shooting or taking_damage:
+	if is_attacking or is_shooting or taking_damage or lose_control:
 		return
 	is_attacking = true
 	anim.play('attack' if is_on_floor() else 'jump_attack')
 	await wait_for_n_process_frames(8)
+	play_audio(1)
 	kick_hitbox.monitoring = true
 	kick_hitbox.visible = true
+
+	await wait_for_n_process_frames(24)
+	if is_attacking:
+		is_attacking=false
+		anim.offset.x = 0
+		kick_hitbox.monitoring = false
+		kick_hitbox.visible = false
+
 
 func on_kick_hit(b):
 	print(b.name)
@@ -57,13 +90,14 @@ func on_kick_hit(b):
 
 func shoot():
 	idle_timer = 0
-	if is_attacking or is_shooting:
+	if is_attacking or is_shooting or lose_control:
 		return
 	is_shooting = true
 	anim.play('shoot' if is_on_floor() else 'jump_shoot')
 	anim.offset.x = -16 if anim.flip_h else 16
 	
 	await wait_for_n_process_frames(8)
+	play_audio(4)
 
 	var animated_shot = animated_shot_scene.instantiate()
 	get_tree().root.add_child(animated_shot)
@@ -111,8 +145,9 @@ func jump():
 		dir.x *= -1
 		
 		ectoplasm.momentum_force += dir * jump_vel
-	if is_on_floor() and not is_attacking and not is_shooting:
-		velocity.y = jump_vel
+	if is_on_floor() and not is_attacking and not is_shooting and not lose_control:
+		velocity.y = momentum_force.y + jump_vel
+		play_audio(0)
 
 func _physics_process(delta: float) -> void:
 	if is_on_ecto():
@@ -133,16 +168,21 @@ func movement(delta):
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 		
-	if not(is_attacking or is_shooting):
+	if not(is_attacking or is_shooting or lose_control):
 		direction = InputWrapper.get_move().x
 		
-	if (is_attacking or is_shooting) and is_on_floor():
+	if (is_attacking or is_shooting or lose_control) and is_on_floor():
 		direction = 0
 	
 	if direction:
-		velocity.x = direction * speed * speed_mod
+		velocity.x = direction * speed * speed_mod + momentum_force.x
 	else:
-		velocity.x = move_toward(velocity.x, 0, speed)
+		velocity.x = momentum_force.x + move_toward(velocity.x, 0, speed)
+
+	momentum_force = lerp(momentum_force, Vector2(0, 0), delta * 10)
+	momentum_force.x = 0 if momentum_force.x < .1 else momentum_force.x
+	momentum_force.y = 0 if momentum_force.y < .1 else momentum_force.y
+
 
 func handle_animation(delta):
 	idle_timer += delta
@@ -151,7 +191,7 @@ func handle_animation(delta):
 		anim.flip_h = velocity.x < 0
 		kick_hitbox.position.x = -abs(kick_hitbox.position.x) if velocity.x < 0 else abs(kick_hitbox.position.x)
 
-	if is_attacking or is_shooting or taking_damage:
+	if is_attacking or is_shooting or taking_damage or lose_control:
 		return
 
 	if is_on_floor() and was_on_air:

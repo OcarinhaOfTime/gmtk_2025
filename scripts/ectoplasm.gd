@@ -27,7 +27,8 @@ func on_body_exited(b):
 	player.ectoplasm = null
 	pull_force = Vector2(0, 0)
 	momentum_force = b.velocity
-	player.velocity += momentum_force.normalized() * 100
+	momentum_force = momentum_force.limit_length(500)
+	player.momentum_force = momentum_force
 
 func move_toward2d(from, to, amount):
 	return Vector2(move_toward(from.x, to.x, amount), move_toward(from.y, to.y, amount))

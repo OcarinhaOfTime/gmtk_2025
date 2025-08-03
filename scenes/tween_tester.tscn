@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfm5vccqmoy3x"]
+
+[ext_resource type="Script" uid="uid://c1dnpgjsmhsno" path="res://scripts/tween_tester.gd" id="1_33j7r"]
+[ext_resource type="PackedScene" uid="uid://cyh2ffqolxs8r" path="res://scenes/enemy.tscn" id="2_33j7r"]
+
+[node name="tween_tester" type="Node2D"]
+script = ExtResource("1_33j7r")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(5, 5)
+
+[node name="enemy" parent="." instance=ExtResource("2_33j7r")]
+speed = 0.0
