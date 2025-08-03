@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=4 uid="uid://c6gsub1wtiu4r"]
 
 [ext_resource type="TileSet" uid="uid://c3kgq4t2leaxg" path="res://resources/tileset_main.tres" id="1_sl44i"]
-[ext_resource type="Script" uid="uid://42ltmstlpjm5" path="res://scenes/killzone.gd" id="2_8ykyq"]
+[ext_resource type="Script" uid="uid://42ltmstlpjm5" path="res://scripts/killzone.gd" id="2_8ykyq"]
 [ext_resource type="PackedScene" uid="uid://dws5vjjna3wh6" path="res://scenes/edge.tscn" id="3_33m27"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_tbgi4"]

@@ -1,10 +1,13 @@
-[gd_scene load_steps=5 format=4 uid="uid://b48gqd2p73kte"]
+[gd_scene load_steps=7 format=4 uid="uid://b48gqd2p73kte"]
 
 [ext_resource type="TileSet" uid="uid://c3kgq4t2leaxg" path="res://resources/tileset_main.tres" id="1_8q8ih"]
-[ext_resource type="Script" uid="uid://42ltmstlpjm5" path="res://scenes/killzone.gd" id="2_k45mu"]
+[ext_resource type="Script" uid="uid://42ltmstlpjm5" path="res://scripts/killzone.gd" id="2_k45mu"]
 [ext_resource type="PackedScene" uid="uid://dws5vjjna3wh6" path="res://scenes/edge.tscn" id="3_ncvry"]
+[ext_resource type="Script" uid="uid://bqs51p1o08psw" path="res://scripts/level_area.gd" id="4_k45mu"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_tbgi4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8q8ih"]
 
 [node name="stage1" type="Node2D"]
 
@@ -43,3 +46,11 @@ position = Vector2(-158, 0)
 unique_name_in_owner = true
 position = Vector2(2401, 23)
 rotation = -1.5708
+
+[node name="level_area" type="Area2D" parent="." groups=["player"]]
+position = Vector2(260, 42)
+script = ExtResource("4_k45mu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="level_area"]
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_8q8ih")

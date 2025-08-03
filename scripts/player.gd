@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
 signal on_death()
+signal entered_new_level()
+
 var speed = 120.0
 var jump_vel = -320.0
 
@@ -43,6 +45,9 @@ func _ready() -> void:
 func play_audio(idx):
 	audio_player.play_once(idx)
 
+func on_entereed_new_level():
+	entered_new_level.emit()
+
 func die():
 	lose_control = true
 	anim.play('dead')
@@ -83,7 +88,6 @@ func attack():
 
 
 func on_kick_hit(b):
-	print(b.name)
 	if b.is_in_group('enemy') and b.has_node('HealthComponent'):
 		b.get_node('HealthComponent').take_damage(3)
 
