@@ -1,24 +1,24 @@
 [gd_scene load_steps=15 format=3 uid="uid://cyh2ffqolxs8r"]
 
-[ext_resource type="Script" uid="uid://bv71a0nmdcv4q" path="res://scripts/enemy.gd" id="1_md0e3"]
-[ext_resource type="Texture2D" uid="uid://cux384bjf8jn1" path="res://sprites/npcs/bat.png" id="2_4ra3w"]
-[ext_resource type="Shader" uid="uid://y2inmay3cvl7" path="res://shaders/color_sprite.gdshader" id="2_c4w8v"]
-[ext_resource type="Script" uid="uid://cllpdcivereov" path="res://scripts/health_component.gd" id="3_4ra3w"]
-[ext_resource type="Script" uid="uid://q4mbg6qjql" path="res://scripts/animatable_sprite.gd" id="3_5uy6h"]
-[ext_resource type="AudioStream" uid="uid://cid35yflsfp2a" path="res://audio/sfx/Enemy Hurt.wav" id="6_md484"]
-[ext_resource type="AudioStream" uid="uid://b1ffuifdb2isj" path="res://audio/sfx/Enemy Dead.wav" id="7_ipns3"]
-[ext_resource type="Script" uid="uid://dat0t2tqvm8b6" path="res://scripts/audio_player.gd" id="8_8qclf"]
+[ext_resource type="Script" uid="uid://bv71a0nmdcv4q" path="res://scripts/enemy.gd" id="1_0aawl"]
+[ext_resource type="Shader" uid="uid://y2inmay3cvl7" path="res://shaders/color_sprite.gdshader" id="2_oaqj6"]
+[ext_resource type="Texture2D" uid="uid://cux384bjf8jn1" path="res://sprites/npcs/bat.png" id="3_wed6f"]
+[ext_resource type="Script" uid="uid://q4mbg6qjql" path="res://scripts/animatable_sprite.gd" id="4_qjqhd"]
+[ext_resource type="Script" uid="uid://cllpdcivereov" path="res://scripts/health_component.gd" id="5_384qc"]
+[ext_resource type="AudioStream" uid="uid://cid35yflsfp2a" path="res://audio/sfx/Enemy Hurt.wav" id="6_rbcti"]
+[ext_resource type="AudioStream" uid="uid://b1ffuifdb2isj" path="res://audio/sfx/Enemy Dead.wav" id="7_edj12"]
+[ext_resource type="Script" uid="uid://dat0t2tqvm8b6" path="res://scripts/audio_player.gd" id="8_v46qf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xwavj"]
-shader = ExtResource("2_c4w8v")
+shader = ExtResource("2_oaqj6")
 shader_parameter/color = Color(1, 1, 1, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j7wed"]
-atlas = ExtResource("2_4ra3w")
+atlas = ExtResource("3_wed6f")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_radsc"]
-atlas = ExtResource("2_4ra3w")
+atlas = ExtResource("3_wed6f")
 region = Rect2(0, 32, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_civ24"]
@@ -40,11 +40,11 @@ radius = 7.0
 
 [sub_resource type="AudioStreamPlaylist" id="AudioStreamPlaylist_w8i8w"]
 stream_count = 2
-stream_0 = ExtResource("6_md484")
-stream_1 = ExtResource("7_ipns3")
+stream_0 = ExtResource("6_rbcti")
+stream_1 = ExtResource("7_edj12")
 
-[node name="enemy" type="Area2D" groups=["enemy"]]
-script = ExtResource("1_md0e3")
+[node name="bat" type="Area2D" groups=["enemy"]]
+script = ExtResource("1_0aawl")
 speed = 50.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -53,16 +53,16 @@ position = Vector2(1, 0)
 sprite_frames = SubResource("SpriteFrames_civ24")
 autoplay = "default"
 frame_progress = 0.764051
-script = ExtResource("3_5uy6h")
+script = ExtResource("4_qjqhd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_5cnjq")
 
 [node name="HealthComponent" type="Node2D" parent="."]
-script = ExtResource("3_4ra3w")
+script = ExtResource("5_384qc")
 metadata/_custom_type_script = "uid://cllpdcivereov"
 
 [node name="audio_player" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamPlaylist_w8i8w")
-script = ExtResource("8_8qclf")
+script = ExtResource("8_v46qf")
 metadata/_custom_type_script = "uid://dat0t2tqvm8b6"
